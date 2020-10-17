@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: eureka-server
+server:
+  port: 9000
+eureka:
+  client:
+    register-with-eureka: false # 是否将自己注册到Eureka-Server中
+    fetch-registry: false # 是否从Eureka-Server中获取服务注册信息
