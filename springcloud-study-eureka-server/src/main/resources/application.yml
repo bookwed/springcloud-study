@@ -1,9 +1,13 @@
 spring:
   application:
-    name: eureka-server
+    name: eureka-server-a
 server:
   port: 9000
 eureka:
+  instance:
+    hostname: eurekaA
   client:
-    register-with-eureka: false # 是否将自己注册到Eureka-Server中
-    fetch-registry: false # 是否从Eureka-Server中获取服务注册信息
+    register-with-eureka: true # 是否将自己注册到Eureka-Server中
+    fetch-registry: true # 是否从Eureka-Server中获取服务注册信息
+    service-url:
+      defaultZone: http://192.168.3.8:9001/eureka/,http://192.168.3.8:9002/eureka/
