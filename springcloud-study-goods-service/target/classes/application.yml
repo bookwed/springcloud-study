@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: goods-service
+
+server:
+  port: 9007
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.8:9000/eureka

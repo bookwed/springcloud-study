@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: user-service
+
+server:
+  port: 9006
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.8:9000/eureka
