@@ -21,6 +21,11 @@ public class GoodsController {
     private RestTemplate restTemplate;
 
 
+    /**
+     * 使用RestTemplate来调用其他服务
+     * @param name
+     * @return
+     */
     @GetMapping("get")
     public String get(String name){
         //使用RestTemplate来调用UserService
@@ -31,4 +36,27 @@ public class GoodsController {
         String s = restTemplate.getForObject("http://" + host + ":" + port + "/user/hello?name={1}", String.class, name);
         return "这里是调用user-service返回的结果：" + s;
     }
+
+
+    // 实现轮询选择服务器
+    int count = 0;
+
+    /**
+     * 手动实现负载均衡
+     * @param name
+     * @return
+     */
+    @GetMapping("loadBalance")
+    public String loadBalance(String name){
+        List<ServiceInstance> instanceList = discoveryClient.getInstances("user-service");
+        ServiceInstance instance = instanceList.get(count % instanceList.size());
+        count++;    //下一次要调用的服务器
+        String host = instance.getHost();
+        int port = instance.getPort();
+        String s = restTemplate.getForObject("http://" + host + ":" + port + "/user/balance?name={1}", String.class, name);
+        return "手动实现负载均衡，注意看端口的变化：" + s;
+    }
+
+
+
 }
