@@ -1,6 +1,9 @@
 package com.wei.controller;
 
 
+import com.wei.service.GoodsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
@@ -15,6 +18,8 @@ import java.util.List;
 @RequestMapping("goods")
 @RestController
 public class GoodsController {
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private DiscoveryClient discoveryClient;
 
@@ -24,6 +29,9 @@ public class GoodsController {
     @Autowired
     @Qualifier("loadBalancer")
     private RestTemplate loadBalancer;
+
+    @Autowired
+    private GoodsService goodsService;
 
     /**
      * 使用RestTemplate来调用其他服务
@@ -71,6 +79,19 @@ public class GoodsController {
     public String autoLoadBalancer(String name){
         String s = loadBalancer.getForObject("http://user-service/user/balance?name={1}", String.class, name);
         return "自动实现负载均衡，注意端口变化：" + s;
+    }
+
+    /**
+     * 测试retry功能
+     * @param num
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("retry")
+    public String testRetry(int num) throws Exception{
+        int minNum = goodsService.getMinGoodsNum(num == 0 ? 1: num);
+        logger.info("剩余的数量==="+minNum);
+        return "测试重试功能：" + minNum;
     }
 
 
