@@ -1,6 +1,8 @@
 package com.wei;
 
 
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RandomRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -23,10 +25,17 @@ public class GoodsApplication {
         return new RestTemplate();
     }
 
-    //使用 @LoadBalanced 实现负载均衡
+    //使用 @LoadBalanced 实现负载均衡，默认采用轮询策略
     @Bean
     @LoadBalanced
     RestTemplate loadBalancer(){
         return new RestTemplate();
+    }
+
+    // 如果希望采用其它策略，则指定IRule实现
+    // 这里是采用了随机策略
+    @Bean
+    public IRule ribbonRule(){
+        return new RandomRule();
     }
 }
