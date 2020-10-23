@@ -2,16 +2,17 @@ package com.wei.controller;
 
 
 import com.wei.service.GoodsService;
-import com.wei.service.UserService;
+import com.wei.service.IUserRemoteService;
+import com.wei.user.common.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @Autowired
-    private UserService userService;
+    private IUserRemoteService userRemoteService;
 
     /**
      * 使用RestTemplate来调用其他服务
@@ -105,8 +106,33 @@ public class GoodsController {
      */
     @GetMapping("helloByFeign")
     public String helloByFeign(String name){
-        String result = userService.hello(name);
+        String result = userRemoteService.hello(name);
         return "使用Feign来调用user-service的hello接口，返回值是：" + result;
     }
 
+    //*************************************************************不同类型的参数调用方式
+    @PostMapping("addUser")
+    public ResponseEntity<String> addUser(@RequestBody UserDTO userDTO){
+        logger.info("goods-service调用了user-service的增加用户接口");
+        String s = userRemoteService.addUser(userDTO);
+        return new ResponseEntity<String>(s, HttpStatus.OK);
+    }
+
+    @PutMapping("updateUser")
+    public ResponseEntity<String> updateUser(@RequestBody UserDTO userDTO){
+        String s = userRemoteService.updateUser(userDTO);
+        return new ResponseEntity<String>(s, HttpStatus.OK);
+    }
+
+    @GetMapping("getUser")
+    public ResponseEntity<String> getUserDTOByName(String name){
+        String s = userRemoteService.getUserDTOByName(name);
+        return new ResponseEntity<String>(s, HttpStatus.OK);
+    }
+
+    @DeleteMapping("delUser/{id}")
+    public ResponseEntity<String> getUserDTOByName(@PathVariable Integer id){
+        String s = userRemoteService.deleteUserDTOById(id);
+        return new ResponseEntity<String>(s, HttpStatus.OK);
+    }
 }
