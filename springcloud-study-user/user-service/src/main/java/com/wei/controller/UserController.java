@@ -52,6 +52,7 @@ public class UserController {
     @GetMapping("getUser")
     public ResponseEntity<UserDTO> getUserDTOByName(@RequestParam String name) {
         logger.info("user-service提供了getUserDTOByName服务");
+        System.out.println("getUser："+port);
         UserDTO userDTO = new UserDTO();
         userDTO.setNickname(name);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);

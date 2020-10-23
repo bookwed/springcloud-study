@@ -3,6 +3,7 @@ package com.wei;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
+import com.netflix.loadbalancer.RoundRobinRule;
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,14 +38,19 @@ public class GoodsApplication {
 
     // 如果希望采用其它策略，则指定IRule实现
     // 这里是采用了随机策略
-    @Bean
+   /* @Bean
     public IRule ribbonRule(){
         return new RandomRule();
-    }
+    }*/
 
     //feign日志
     @Bean
     Logger.Level loggerLevel(){
         return Logger.Level.FULL;
+    }
+
+    @Bean
+    public IRule feignRule(){
+        return new RoundRobinRule();
     }
 }
