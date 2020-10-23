@@ -2,6 +2,7 @@ package com.wei.controller;
 
 
 import com.wei.service.GoodsService;
+import com.wei.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 使用RestTemplate来调用其他服务
@@ -94,5 +98,15 @@ public class GoodsController {
         return "测试重试功能：" + minNum;
     }
 
+    /**
+     * 使用feign的方式调用user-service提供的接口
+     * @param name
+     * @return
+     */
+    @GetMapping("helloByFeign")
+    public String helloByFeign(String name){
+        String result = userService.hello(name);
+        return "使用Feign来调用user-service的hello接口，返回值是：" + result;
+    }
 
 }
