@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: eureka-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true   # 是否开启通过注册中心进行路由转发的功能，通过 serviceId 转发到服务
+
+server:
+  port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.8:9000/eureka
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug  # 调整 gateway 包的 log 级别,以便排查问题
