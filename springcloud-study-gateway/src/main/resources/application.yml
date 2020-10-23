@@ -7,6 +7,19 @@ spring:
         locator:
           enabled: true   # 是否开启通过注册中心进行路由转发的功能，通过 serviceId 转发到服务
 
+      routes:
+        - id: add_request_header_route
+          uri: http://httpbin.org:80/get
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar   # 返回的header中增加：X-Request-Foo=Bar
+          predicates:
+            - After=2020-10-23T22:23:00+08:00[Asia/Shanghai]
+
+#        - id: time_route
+#          uri: http://www.baidu.com
+#          predicates:
+#            - After=2020-10-23T21:49:00+08:00[Asia/Shanghai]
+
 server:
   port: 8888
 eureka:
