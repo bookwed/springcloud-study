@@ -3,6 +3,7 @@ package com.wei;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -39,5 +40,11 @@ public class GoodsApplication {
     @Bean
     public IRule ribbonRule(){
         return new RandomRule();
+    }
+
+    //feign日志
+    @Bean
+    Logger.Level loggerLevel(){
+        return Logger.Level.FULL;
     }
 }

@@ -8,3 +8,21 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.3.8:9000/eureka
+
+# feign日志配置目录
+logging:
+  level:
+    com:
+      wei: debug
+
+# 数据压缩，解决传输效率
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/html,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+ribbon.MaxAutoRetries: 3
