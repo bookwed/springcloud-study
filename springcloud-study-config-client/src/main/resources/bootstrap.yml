@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: client
+  cloud:
+    config:
+      profile: dev
+      label: main
+      uri: http://localhost:9020/
+
+server:
+  port: 9021
