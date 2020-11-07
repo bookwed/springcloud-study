@@ -1,6 +1,7 @@
 package com.wei.controller;
 
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.wei.service.GoodsService;
 import com.wei.service.IUserRemoteService;
 import com.wei.user.common.dto.UserDTO;
@@ -135,4 +136,20 @@ public class GoodsController {
         String s = userRemoteService.deleteUserDTOById(id);
         return new ResponseEntity<String>(s, HttpStatus.OK);
     }
+
+    /**
+     * Ribbon中使用熔断器
+     */
+    @HystrixCommand(fallbackMethod = "testHystrixFallback")
+    @GetMapping("testHystrix")
+    public String testHystrix(String name){
+        String s = loadBalancer.getForObject("http://user-service/user/balance?name={1}", String.class, name);
+        return "测试熔断器的使用：" + s;
+    }
+
+    public String testHystrixFallback(String name){
+     logger.info("熔断，默认回调函数");
+     return "默认用户：name=张三";
+    }
+
 }
