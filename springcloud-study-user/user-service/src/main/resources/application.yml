@@ -6,5 +6,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.3.8:9000/eureka
+  instance:
+    # 显示版本
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+
 server:
   port: 9006
