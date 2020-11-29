@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.util.Date;
 
-@TableName("bms_device")
+@TableName("reg_user")
 public class RegUser extends Model {
 
     @TableId(value = "id", type = IdType.AUTO)
