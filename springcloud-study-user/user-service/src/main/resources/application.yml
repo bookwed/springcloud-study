@@ -1,15 +1,33 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: user-service
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://192.168.3.8:9000/eureka
-  instance:
-    # 显示版本
-    prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
-
 server:
   port: 9006
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.wei.user.domain.entity
+  global-config:
+    db-config:
+      # 枚举IdType 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID"，4:"该类型为未设置主键类型"，5:"字符串全局唯一ID"
+      id-type: id_worker
+      # 字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: not_empty
+      # 驼峰下划线转换
+      column-underline: true
+      # 逻辑删除配置，删除前
+      logic-not-delete-value: 1
+      # 逻辑删除配置，删除后
+      logic-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
+
+

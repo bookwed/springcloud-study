@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wei</groupId>
+    <artifactId>springcloud-study-top</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </parent>
+
+    <name>springcloud-study-top</name>
+    <description>顶级pom文件，所有项目都会继承</description>
+    <url>https://www.weierdong.com</url>
+    <inceptionYear>2020</inceptionYear>
+    <licenses>
+        <license>
+            <name>springcloud-study-top</name>
+            <url></url>
+            <distribution>top repo</distribution>
+            <comments>A business  license</comments>
+        </license>
+    </licenses>
+    <organization>
+        <name>springcloud-study-top</name>
+        <url>公司官网地址</url>
+    </organization>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- java编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- 打包源代码插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!--<distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Peanut Public Repository</name>
+            <url>http://www.weierdong.com/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>public</id>
+            <name>Peanut Public Repository</name>
+            <url>http://www.weierdong.com/nexus/content/groups/public</url>
+        </repository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>Peanut Public Repository</name>
+            <url>http://www.weierdong.com/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <name>Peanut Public Repository</name>
+            <url>http://www.weierdong.com/nexus/content/repositories/snapshots</url>
+        </repository>
+    </repositories>-->
+
+</project>

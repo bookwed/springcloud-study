@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.3.31:3306/mydb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&tinyInt1isBit=false
+    username: root
+    password: dong
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.3.8:9000/eureka
+  instance:
+    # 显示版本
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+    # status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
