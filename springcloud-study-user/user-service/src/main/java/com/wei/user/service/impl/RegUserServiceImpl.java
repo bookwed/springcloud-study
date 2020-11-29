@@ -31,6 +31,9 @@ public class RegUserServiceImpl extends ServiceImpl<RegUserMapper, RegUser> impl
 
     @Override
     public RegUserVO findPage(RegUserQO regUserQO) {
+
+        /*
+        //方式一：通过继承提供的方法查询，需要转换
         long startTime=System.currentTimeMillis();            //获得当前时间
         RegUserVO vo = new RegUserVO();
         //分页查询
@@ -52,9 +55,21 @@ public class RegUserServiceImpl extends ServiceImpl<RegUserMapper, RegUser> impl
         vo.setTotalPage(userPage.getPages());    //总页数
         vo.setRecords(list);
         long endTime=System.currentTimeMillis();                //获得当前时间
-        System.out.println("方法执行时长："+(endTime-startTime)); //耗费时长
+        System.out.println("方法执行时长："+(endTime-startTime)); //耗费时长*/
 
-        //TODO 改造成写sql语句，直接返回类型为需要的类型
+        //自定义sql语句，直接返回类型为需要的类型
+        long startTime=System.currentTimeMillis();            //获得当前时间
+        RegUserVO vo = new RegUserVO();
+        //分页查询
+        Page<RegUser> page = new Page<>(regUserQO.getPageNum(), regUserQO.getPageSize());
+        IPage<RegUserDTO> dtoPage = baseMapper.selectPageVo(page, regUserQO);
+        vo.setCurrent(regUserQO.getPageNum());  //当前页
+        vo.setSize(regUserQO.getPageSize());    //每页条数
+        vo.setTotal(dtoPage.getTotal());       //总条数
+        vo.setTotalPage(dtoPage.getPages());    //总页数
+        vo.setRecords(dtoPage.getRecords());
+        long endTime=System.currentTimeMillis();                //获得当前时间
+        System.out.println("方法执行时长："+(endTime-startTime)); //耗费时长
         return vo;
     }
 
