@@ -1,6 +1,8 @@
 package com.wei.user.remote;
 
 import com.wei.user.api.dto.RegUserDTO;
+import com.wei.user.api.dto.RegUserQO;
+import com.wei.user.api.dto.RegUserVO;
 import com.wei.user.api.service.IRegUserRemoteService;
 import com.wei.user.domain.entity.RegUser;
 import com.wei.user.service.IRegUserService;
@@ -22,5 +24,10 @@ public class RegUserRemoteServiceImpl implements IRegUserRemoteService {
         RegUserDTO regUserDTO = new RegUserDTO();
         BeanUtils.copyProperties(regUser, regUserDTO);
         return regUserDTO;
+    }
+
+    @Override
+    public RegUserVO findPage(RegUserQO regUserQO) {
+        return regUserService.findPage(regUserQO);
     }
 }

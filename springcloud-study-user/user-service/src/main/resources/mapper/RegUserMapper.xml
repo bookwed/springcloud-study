@@ -11,4 +11,13 @@
         update reg_user set password = #{password}, create_time = #{createTime} where id = #{id}
     </update>
 
+    <select id="findPage">
+        select * from reg_user
+        <where>
+            <if test="loginName != null">
+                and login_name = #{loginName}
+            </if>
+        </where>
+    </select>
+
 </mapper>
